@@ -2,14 +2,18 @@
 using BubbleSO;
 using UnityEditor;
 
-[CustomEditor(typeof(BubbleEventListener))]
-class BubbleListenerEditor : Editor
+namespace BubbleSOEditor
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(BubbleEventListener))]
+    class BubbleListenerEditor : Editor
     {
-        BubbleEventListener script = (BubbleEventListener)target;
-        script.ScriptableEvent = (BubbleEvent)EditorGUILayout.ObjectField("Scriptable Event", script.ScriptableEvent, typeof(BubbleEvent), true);
-        script.EnableDebugLogs = EditorGUILayout.Toggle("Enable Debug Logs", script.EnableDebugLogs);
+        public override void OnInspectorGUI()
+        {
+            BubbleEventListener script = (BubbleEventListener)target;
+            script.ScriptableEvent = (BubbleEvent)EditorGUILayout.ObjectField("Scriptable Event",
+                script.ScriptableEvent, typeof(BubbleEvent), true);
+            script.EnableDebugLogs = EditorGUILayout.Toggle("Enable Debug Logs", script.EnableDebugLogs);
+        }
     }
 }
 #endif

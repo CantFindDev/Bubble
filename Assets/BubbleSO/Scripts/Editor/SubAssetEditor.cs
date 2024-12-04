@@ -1,49 +1,65 @@
 using BubbleSO;
+using BubbleSOEditor;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ScriptableBubble), true)]
+[CustomEditor(typeof(BubbleScriptable), true)]
 public class SubAssetEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
-        
-        var scriptableBubble = (ScriptableBubble)target;
-        var SB = new SerializedObject(scriptableBubble);
+        var scriptableBubble = (BubbleScriptable)target;
+        var serializedBubble = new SerializedObject(scriptableBubble);
 
-        // Iterate over all fields with [SubAsset]
-        var property = SB.GetIterator();
-        while (property.NextVisible(true))
+        serializedBubble.Update();
+
+        var fields = scriptableBubble.GetType()
+            .GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+
+        foreach (var field in fields)
         {
-            var field = scriptableBubble.GetType().GetField(property.name,
-                System.Reflection.BindingFlags.NonPublic |
-                System.Reflection.BindingFlags.Public |
-                System.Reflection.BindingFlags.Instance);
-
-            if (field != null && System.Attribute.IsDefined(field, typeof(ChildBubbleAttribute)))
+            if (System.Attribute.IsDefined(field, typeof(ChildBubbleAttribute)))
             {
-                var subAsset = property.objectReferenceValue;
-
-                if (subAsset == null)
+                var property = serializedBubble.FindProperty(field.Name);
+                if (property == null)
                 {
-                    if (GUILayout.Button($"Create {field.FieldType.Name}"))
-                    {
-                 
-                        // Create a new sub-asset
-                        var newSubAsset = CreateInstance(field.FieldType);
+                    Debug.LogWarning($"Property for field '{field.Name}' not found.");
+                    continue;
+                }
 
-                        // Add it as a sub-asset of the current ScriptableObject
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(property, new GUIContent(ObjectNames.NicifyVariableName(field.Name)));
+
+                if (scriptableBubble.BubbleVariables.ContainsKey(field.Name))
+                {
+                    if (GUILayout.Button("X", GUILayout.Width(30)))
+                    {
+                        Undo.RecordObject(scriptableBubble, "Remove Sub-Asset");
+                        AssetDatabase.RemoveObjectFromAsset(scriptableBubble.BubbleVariables[field.Name]);
+                        scriptableBubble.BubbleVariables.Remove(field.Name);
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button($"Create {field.FieldType.Name}", GUILayout.Width(100)))
+                    {
+                        var newSubAsset = CreateInstance<BubbleVariable>();
+                        newSubAsset.VariableType = BubbleEditorUtils.GetBubbleVariableTypeFromFieldType(field.FieldType);
                         newSubAsset.name = field.Name;
+
+                        scriptableBubble.BubbleVariables.Add(field.Name, newSubAsset);
                         AssetDatabase.AddObjectToAsset(newSubAsset, scriptableBubble);
                         AssetDatabase.SaveAssets();
 
-                        // Assign the created sub-asset
                         property.objectReferenceValue = newSubAsset;
-                        SB.ApplyModifiedProperties();
                     }
                 }
+
+                EditorGUILayout.EndHorizontal();
             }
         }
+
+        serializedBubble.ApplyModifiedProperties();
     }
 }

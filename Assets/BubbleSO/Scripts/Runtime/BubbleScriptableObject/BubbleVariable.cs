@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BubbleSO
 {
@@ -21,7 +20,7 @@ namespace BubbleSO
    [CreateAssetMenu(fileName = "Bubble Variable", menuName = "BubbleSO/Bubble Variable")]
    [Icon("Assets/BubbleSO/Icons/BubbleScriptableObj.png")]
 #endif
-   public class VariableBubble : ScriptableObject
+   public class BubbleVariable : ScriptableObject
    {
       public BubbleVariableType VariableType;
       public bool IsVariableTypeActive(BubbleVariableType type) => (VariableType & type) != 0;

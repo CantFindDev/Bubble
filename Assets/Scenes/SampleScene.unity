@@ -128,8 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 64438536}
-  - component: {fileID: 64438538}
-  - component: {fileID: 64438537}
   m_Layer: 0
   m_Name: EventListener
   m_TagString: Untagged
@@ -152,34 +150,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &64438537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64438534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaa28c496a80f424f8c478f24a13da64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScriptableEvent: {fileID: 0}
-  EnableDebugLogs: 1
---- !u!114 &64438538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64438534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51b3b2d9e48f96b4aa6d7351a5f6ed29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScriptableEvent: {fileID: 0}
-  EnableDebugLogs: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

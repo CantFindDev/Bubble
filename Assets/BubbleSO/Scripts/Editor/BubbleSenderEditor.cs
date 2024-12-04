@@ -3,39 +3,42 @@ using BubbleSO;
 using UnityEditor;
 using UnityEngine;
 
+namespace BubbleSOEditor
+{
     [CustomEditor(typeof(BubbleEventSender))]
     public class BubbleSenderEditor : Editor
     {
         public override void OnInspectorGUI()
         {
-            BubbleEventSender BubbleScript = (BubbleEventSender)target;
+            var bubbleScript = (BubbleEventSender)target;
 
-            BubbleScript.EventType = (BubbleEventType)EditorGUILayout.EnumFlagsField("Event Type", BubbleScript.EventType);
-            if (BubbleScript.EventType == BubbleEventType.NoEvent) return;
-           
-            DrawSendEventSettings(BubbleScript);
-            
-            DrawEventSettings("Float Event Settings", BubbleScript.floatBubbleEventSettings, BubbleEventType.FloatEvent);
-            DrawEventSettings("Int Event Settings", BubbleScript.intBubbleEventSettings, BubbleEventType.IntEvent);
-            DrawEventSettings("Bool Event Settings", BubbleScript.boolBubbleEventSettings, BubbleEventType.BoolEvent);
-            DrawEventSettings("String Event Settings", BubbleScript.stringBubbleEventSettings, BubbleEventType.StringEvent);
-            DrawEventSettings("Vector2 Event Settings", BubbleScript.vector2BubbleEventSettings, BubbleEventType.Vector2Event);
-            DrawEventSettings("Vector3 Event Settings", BubbleScript.vector3BubbleEventSettings, BubbleEventType.Vector3Event);
-            DrawEventSettings("GameObject Event Settings", BubbleScript.gameObjectBubbleEventSettings, BubbleEventType.GameObjectEvent);
+            bubbleScript.EventType = (BubbleEventType)EditorGUILayout.EnumFlagsField("Event Type", bubbleScript.EventType);
+            if (bubbleScript.EventType == BubbleEventType.NoEvent) return;
+
+            DrawSendEventSettings(bubbleScript);
+
+            DrawEventSettings("Float Event Settings", bubbleScript.floatBubbleEventSettings, BubbleEventType.FloatEvent);
+            DrawEventSettings("Int Event Settings", bubbleScript.intBubbleEventSettings, BubbleEventType.IntEvent);
+            DrawEventSettings("Bool Event Settings", bubbleScript.boolBubbleEventSettings, BubbleEventType.BoolEvent);
+            DrawEventSettings("String Event Settings", bubbleScript.stringBubbleEventSettings, BubbleEventType.StringEvent);
+            DrawEventSettings("Vector2 Event Settings", bubbleScript.vector2BubbleEventSettings, BubbleEventType.Vector2Event);
+            DrawEventSettings("Vector3 Event Settings", bubbleScript.vector3BubbleEventSettings, BubbleEventType.Vector3Event);
+            DrawEventSettings("GameObject Event Settings", bubbleScript.gameObjectBubbleEventSettings, BubbleEventType.GameObjectEvent);
         }
 
-        private void DrawSendEventSettings(BubbleEventSender BubbleScript)
+        private void DrawSendEventSettings(BubbleEventSender bubbleScript)
         {
             EditorGUILayout.Space(10);
             EditorGUILayout.LabelField("Send Event", EditorStyles.boldLabel);
-            BubbleScript.AutoEventType = (BubbleAutoEventType)EditorGUILayout.EnumPopup("Auto Send Event Type", BubbleScript.AutoEventType);
-            if (BubbleScript.AutoEventType == BubbleAutoEventType.SendTimer && !BubbleScript.isAutoEventSent)
+            bubbleScript.AutoEventType = (BubbleAutoEventType)EditorGUILayout.EnumPopup("Auto Send Event Type", bubbleScript.AutoEventType);
+            if (bubbleScript.AutoEventType == BubbleAutoEventType.SendTimer && !bubbleScript.isAutoEventSent)
             {
-                BubbleScript.sendAfterSeconds = EditorGUILayout.FloatField("Send After Seconds", BubbleScript.sendAfterSeconds);
+                bubbleScript.sendAfterSeconds = EditorGUILayout.FloatField("Send After Seconds", bubbleScript.sendAfterSeconds);
             }
+
             if (GUILayout.Button("Trigger Event", EditorStyles.miniButton))
             {
-                BubbleScript.SendEvent();
+                bubbleScript.SendEvent();
             }
         }
 
@@ -46,28 +49,8 @@ using UnityEngine;
             EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
 
             settings.BubbleEvent = (BubbleEvent)EditorGUILayout.ObjectField($"{label} Event", settings.BubbleEvent, typeof(BubbleEvent), true);
-            settings.BubbleEventValue = DrawFieldForType(settings.BubbleEventValue, "Value");
-        }
-        
-        private T DrawFieldForType<T>(T value, string label)
-        {
-            if (typeof(T) == typeof(float))
-                return (T)(object)EditorGUILayout.FloatField(label, (float)(object)value);
-            if (typeof(T) == typeof(int))
-                return (T)(object)EditorGUILayout.IntField(label, (int)(object)value);
-            if (typeof(T) == typeof(bool))
-                return (T)(object)EditorGUILayout.Toggle(label, (bool)(object)value);
-            if (typeof(T) == typeof(string))
-                return (T)(object)EditorGUILayout.TextField(label, (string)(object)value);
-            if (typeof(T) == typeof(Vector2))
-                return (T)(object)EditorGUILayout.Vector2Field(label, (Vector2)(object)value);
-            if (typeof(T) == typeof(Vector3))
-                return (T)(object)EditorGUILayout.Vector3Field(label, (Vector3)(object)value);
-            if (typeof(T) == typeof(GameObject))
-                return (T)(object)EditorGUILayout.ObjectField(label, (GameObject)(object)value, typeof(GameObject), true);
-            
-            EditorGUILayout.LabelField(label, "Unsupported type");
-            return value;
+            settings.BubbleEventValue = BubbleEditorUtils.DrawFieldForType(settings.BubbleEventValue, "Value");
         }
     }
-    #endif
+}
+#endif
