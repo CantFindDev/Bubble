@@ -1,0 +1,7 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "#SCRIPTNAME# Bubble", menuName = "BubbleSO/Custom/#SCRIPTNAME#")]
+public class #SCRIPTNAME# : ScriptableBubble
+{
+    // Add custom fields and methods here
+}

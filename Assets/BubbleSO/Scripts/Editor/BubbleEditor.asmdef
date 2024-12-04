@@ -1,0 +1,16 @@
+{
+    "name": "BubbleEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:54360e944b606534a96639c1bfe7e8bb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

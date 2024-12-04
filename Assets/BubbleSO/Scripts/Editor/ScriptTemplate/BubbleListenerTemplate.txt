@@ -1,0 +1,40 @@
+using UnityEngine;
+using BubbleSO;
+
+public class #SCRIPTNAME# : BubbleEventListener
+{
+    public override void OnFloatEventReceived(float value)
+    {
+        base.OnFloatEventReceived(value);
+    }
+
+    public override void OnIntEventReceived(int value)
+    {
+        base.OnIntEventReceived(value);
+    }
+
+    public override void OnStringEventReceived(string value)
+    {
+        base.OnStringEventReceived(value);
+    }
+
+    public override void OnBoolEventReceived(bool value)
+    {
+        base.OnBoolEventReceived(value);
+    }
+
+    public override void OnVector2EventReceived(Vector2 value)
+    {
+        base.OnVector2EventReceived(value);
+    }
+
+    public override void OnVector3EventReceived(Vector3 value)
+    {
+        base.OnVector3EventReceived(value);
+    }
+
+    public override void OnGameObjectEventReceived(GameObject value)
+    {
+        base.OnGameObjectEventReceived(value);
+    }
+}

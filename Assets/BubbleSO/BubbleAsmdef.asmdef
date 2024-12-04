@@ -1,0 +1,17 @@
+{
+    "name": "BubbleAsdef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:54360e944b606534a96639c1bfe7e8bb",
+        "GUID:c2b9016349f6d704c800c6fb2dedb3d1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
